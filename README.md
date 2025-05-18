@@ -198,10 +198,21 @@ task.spawn(function()
 			harvestAllPlants()
 		end
 		if selling then
+	local char = player.Character
+	if char and char:FindFirstChild("HumanoidRootPart") then
+		local sellBooth = workspace:FindFirstChild("SellBooth") or workspace:FindFirstChild("Sell") or workspace:FindFirstChild("Shop")
+		if sellBooth then
+			char.HumanoidRootPart.CFrame = sellBooth.CFrame + Vector3.new(0, 5, 0)
+			task.wait(1)
 			pcall(function()
 				ReplicatedStorage.GameEvents.Sell_Inventory:FireServer()
 			end)
+		else
+			warn("Não foi possível encontrar a barraca de vender.")
 		end
+	end
+end
+
 		task.wait(3)
 	end
 end)
